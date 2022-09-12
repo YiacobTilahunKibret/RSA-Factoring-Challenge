@@ -1,25 +1,38 @@
-#!/usr/bin/python3
-""" My module for testing numbers and finding the factorization """
-import math
+#!/usr/bin/env python3
+""" Factor numbers """
 from sys import argv
+from math import sqrt
 
 
-def factor(number, test_num):
-    """ Finds the values to return once a number has been found
+def open_read_file(file_name):
+    """read from file
+    add to array
     """
+    with open(file_name, encoding="utf-8") as file:
+        lines = file.readlines()
+    number_to_factor = []
+    for line in lines:
+        number_to_factor.append(int(line))
+    return number_to_factor
 
 
-    print("{}={}*{}".format(number, (number // test_num), test_num))
+def find_and_times(n):
+    """factor each
+    n given
+    """
+    for i in range(2, n):
+        if n == ((n // i) * i):
+            print("{}={}*{}".format(n, (n // i), i))
+            break
 
 
-with open(argv[1], mode="r", encoding="UTF-8") as f:
-    for line in f:
-        number = int(line)
-        if number % 2 == 0:
-            factor(number, 2)
-        else:
-            max_number_to_test = math.floor(math.sqrt(number))
-            for test_num in range(3, max_number_to_test + 1, 2):
-                if number % test_num == 0:
-                    factor(number, test_num)
-                    break
+def fac_list(ls):
+    """factor each
+    num in ls
+    """
+    for i in ls:
+        find_and_times(i)
+
+
+if len(argv) == 2:
+    fac_list(open_read_file(argv[1]))
